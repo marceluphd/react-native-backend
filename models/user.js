@@ -26,6 +26,37 @@ const UserSchema = new Schema({
        required: true,
        minlength: 8
     },
+    gender: {
+        enum: ["male", "female"],
+        type: String,
+        trim: true,
+    },
+    country: {
+        type: String,
+        trim: true,
+    },
+    state: {
+        type: String,
+        trim: true,
+    },
+    mobile: {
+        type: Number,
+        trim: true
+    },
+    games: {
+        mobile_legends_id: {
+            type: Number,
+            trim: true
+        },
+        pubg_user_id: {
+            type: Number,
+            trim: true
+        }
+    },
+    profile_pic: {
+        type: String,
+        trim: true,
+    },
     tokens: [
         {
           access: {
@@ -43,7 +74,7 @@ const UserSchema = new Schema({
 UserSchema.methods.toJSON = function() {
     const user = this;
     const userObject = user.toObject();
-    return _.pick(userObject, ["_id", "email", "name"]);
+    return _.pick(userObject, ["_id", "email", "name", "gender", "country", "state", "mobile", "games", "profile_pic"]);
 }
 
 UserSchema.pre("save", function(next) {
@@ -117,6 +148,11 @@ UserSchema.methods.removeToken = function(token) {
             tokens: {token}
         }
     });
+}
+
+UserSchema.statics.updateUserInfo = function(_id, body) {
+    const User = this;
+    return User.update({_id}, {$set: body}, {new: true});
 }
 
 const User = mongoose.model('UserDB', UserSchema);
