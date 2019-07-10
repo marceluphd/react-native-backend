@@ -10,6 +10,8 @@ app.use(bodyParser.json());
 
 app.use("/user", userController);
 
-app.listen(3333, () => {
+const port = process.env.PORT || 3333;
+
+app.listen(port, () => {
     console.log("Server is running on port 3333");
 });
