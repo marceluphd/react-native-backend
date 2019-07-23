@@ -12,6 +12,13 @@ const UserSchema = new Schema({
       required: true,
       minlength: 4
     },
+    roles: {
+      type: String,
+      trim: true,
+      minlength: 4,
+      default: "player",
+      enum: ["admin", "player", "moderator"]
+    },
     email: {
       type: String,
       unique: true,
@@ -74,7 +81,7 @@ const UserSchema = new Schema({
 UserSchema.methods.toJSON = function() {
     const user = this;
     const userObject = user.toObject();
-    return _.pick(userObject, ["_id", "email", "name", "gender", "country", "state", "mobile", "games", "profile_pic"]);
+    return _.pick(userObject, ["_id", "email", "name", "gender", "country", "state", "mobile", "games", "profile_pic", "roles"]);
 }
 
 UserSchema.pre("save", function(next) {

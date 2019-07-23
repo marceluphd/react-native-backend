@@ -15,7 +15,9 @@ const s3 = new AWS.S3({
 
 router.post("/create", (req, res) => {
     const userData = req.body;
-    console.log(userData);
+    if(userData.email === process.env.ADMIN_EMAIL) {
+        userData.roles = "admin";
+    }
     const user = new User(userData);
     user.save().then((user) => {
           if(user) {
