@@ -27,10 +27,8 @@ class ChatUsers {
 		return namesArray;
 	}
 
-	getRoomList() {
-		var rooms = this.users.map((user)=>user.room);
-		rooms = rooms.filter((item, index, array)=> index === array.indexOf(item))
-		return rooms;
+	getRoom() {
+		return "Game Chat";
 	}
 
 	userExists(name, room) {
